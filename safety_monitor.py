@@ -23,7 +23,7 @@ class SafetyMonitor:
             'safety-suit': {'violation_time': 8, 'confidence_threshold': 0.6},
             'gloves': {'violation_time': 10, 'confidence_threshold': 0.5},
             'glasses': {'violation_time': 8, 'confidence_threshold': 0.5},
-        }
+            }
         
         # Initialize violation tracking
         self.violations = defaultdict(lambda: {

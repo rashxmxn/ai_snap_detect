@@ -6,6 +6,7 @@
 dataset/
 dataset_kaggle/
 venv/
+violation_screenshots/
 
 # Игнорировать файлы конфигурации среды
 .env
