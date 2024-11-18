@@ -143,6 +143,37 @@ class SmartSafetyMonitor:
         
         return sum(self.detection_history[class_name]) > (self.history_window / 2)
 
+    def draw_detections(self, frame, results):
+        """Draw detection boxes and labels on the frame"""
+        for box in results.boxes:
+            # Get box coordinates
+            x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
+            
+            # Get class name and confidence
+            class_id = int(box.cls[0].item())
+            conf = box.conf[0].item()
+            class_name = results.names[class_id]
+            
+            # Get color for this class (default to white if not in COLORS)
+            color = self.COLORS.get(class_name, (255, 255, 255))
+            
+            # Convert coordinates to integers
+            x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+            
+            # Draw rectangle
+            cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+            
+            # Add label with confidence
+            label = f'{class_name} {conf:.2f}'
+            # Create filled rectangle for text background
+            (label_w, label_h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            cv2.rectangle(frame, (x1, y1 - 20), (x1 + label_w, y1), color, -1)
+            # Add white text
+            cv2.putText(frame, label, (x1, y1 - 5), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        
+        return frame
+
     def run(self):
         cap = cv2.VideoCapture(0)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -156,6 +187,9 @@ class SmartSafetyMonitor:
                     
                 # Perform detection
                 results = self.model(frame, verbose=False)[0]
+                
+                # Draw bounding boxes
+                frame = self.draw_detections(frame, results)
                 
                 # Check PPE compliance and update frame
                 frame = self.check_ppe_compliance(frame, results)
