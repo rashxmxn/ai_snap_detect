@@ -8,6 +8,8 @@ dataset_kaggle/
 venv/
 violation_screenshots/
 context_aware_screenshots/
+output_videos/
+models/
 videos/
 
 # Игнорировать файлы конфигурации среды
