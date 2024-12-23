@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  safety-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: safety-monitor
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models  # Mount models directory
+      - /tmp/.X11-unix:/tmp/.X11-unix  # For webcam access
+    environment:
+      - DISPLAY=${DISPLAY}  # For webcam access
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped

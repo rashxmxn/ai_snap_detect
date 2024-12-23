@@ -14,3 +14,6 @@ Dockerfile
 .dockerignore
 dataset
 dataset_kaggle
+output_videos
+videos
+violation_screenshots
