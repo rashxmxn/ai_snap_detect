@@ -12,3 +12,5 @@ venv/
 .gitignore
 Dockerfile
 .dockerignore
+dataset
+dataset_kaggle
