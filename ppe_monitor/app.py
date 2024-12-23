@@ -51,7 +51,8 @@ if 'violation_stats' not in st.session_state:
     st.session_state.violation_stats = {
         'total_violations': 0,
         'violations_by_ppe': defaultdict(int),
-        'violation_timestamps': [],
+        'violations_screenshots': []
+        #'violation_timestamps': [],
     }
 
 class StreamlitSafetyMonitor:
@@ -79,12 +80,46 @@ class StreamlitSafetyMonitor:
             'gloves': (255, 255, 0),      # Yellow
             'glasses': (0, 255, 255),     # Cyan
         }
+        
+        # Create screenshots directory if it doesn't exist
+        self.screenshots_dir = Path("violation_screenshots")
+        self.screenshots_dir.mkdir(exist_ok=True)
+        
+    def save_violation_screenshot(self, frame, missing_ppe):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        missing_items = "_".join(missing_ppe)
+        filename = f"violation_{missing_items}_{timestamp}.jpg"
+        filepath = self.screenshots_dir / filename
+        
+        # Add violation overlay
+        frame_with_overlay = frame.copy()
+        cv2.putText(frame_with_overlay, "SAFETY VIOLATION!", (50, 50),
+                  cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        y_offset = 100
+        for item in missing_ppe:
+            cv2.putText(frame_with_overlay, f"Missing: {item}", (50, y_offset),
+                      cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            y_offset += 30
+        
+        # Save screenshot
+        cv2.imwrite(str(filepath), frame_with_overlay)
+        
+        # Convert to RGB for Streamlit display
+        rgb_frame = cv2.cvtColor(frame_with_overlay, cv2.COLOR_BGR2RGB)
+        
+        # Add to session state
+        violation_info = {
+            'image': rgb_frame,
+            'timestamp': datetime.now(),
+            'missing_ppe': list(missing_ppe)
+        }
+        st.session_state.violation_stats['violations_screenshots'].append(violation_info)
 
     def update_violation_stats(self, missing_ppe):
         st.session_state.violation_stats['total_violations'] += 1
         for ppe in missing_ppe:
             st.session_state.violation_stats['violations_by_ppe'][ppe] += 1
-        st.session_state.violation_stats['violation_timestamps'].append(datetime.now())
+        #st.session_state.violation_stats['violation_timestamps'].append(datetime.now())
 
     def process_frame(self, frame):
         results = self.model(frame, verbose=False)[0]
@@ -136,9 +171,11 @@ class StreamlitSafetyMonitor:
                     self.update_violation_stats(missing_ppe)
                     self.violations['current']['reported'] = True
                     
+                    # Save and display violation screenshot
+                    self.save_violation_screenshot(frame, missing_ppe)
+                    
                     # Add violation overlay to frame
-                    cv2.putText(frame, "SAFETY VIOLATION!", (50, 50),
-                              cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    cv2.putText(frame, "SAFETY VIOLATION!", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
                     y_offset = 100
                     for item in missing_ppe:
                         cv2.putText(frame, f"Missing: {item}", (50, y_offset),
@@ -200,18 +237,26 @@ def display_violation_metrics():
                     color='PPE Type')
         st.plotly_chart(fig)
     
+    # Display violation screenshots
+    if st.session_state.violation_stats['violations_screenshots']:
+        st.subheader("Violation Screenshots")
+        for idx, violation in enumerate(st.session_state.violation_stats['violations_screenshots']):
+            with st.expander(f"Violation {idx + 1} - {violation['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}"):
+                st.image(violation['image'])
+                st.write(f"Missing PPE: {', '.join(violation['missing_ppe'])}")
+    
     # Timeline of violations
-    if st.session_state.violation_stats['violation_timestamps']:
-        timeline_df = pd.DataFrame(
-            st.session_state.violation_stats['violation_timestamps'],
-            columns=['Timestamp']
-        )
-        timeline_df['Count'] = 1
-        timeline_df = timeline_df.set_index('Timestamp')
-        timeline_df = timeline_df.resample('1Min').sum()
+    # if st.session_state.violation_stats['violation_timestamps']:
+    #     timeline_df = pd.DataFrame(
+    #         st.session_state.violation_stats['violation_timestamps'],
+    #         columns=['Timestamp']
+    #     )
+    #     timeline_df['Count'] = 1
+    #     timeline_df = timeline_df.set_index('Timestamp')
+    #     timeline_df = timeline_df.resample('1Min').sum()
         
-        fig = px.line(timeline_df, title='Violations Timeline')
-        st.plotly_chart(fig)
+    #     fig = px.line(timeline_df, title='Violations Timeline')
+    #     st.plotly_chart(fig)
 
 def main():
     st.title("🎥 Smart Safety Monitor")
@@ -251,8 +296,12 @@ def main():
         st.session_state.violation_stats = {
             'total_violations': 0,
             'violations_by_ppe': defaultdict(int),
-            'violation_timestamps': [],
+            'violations_screenshots': []
+            #'violation_timestamps': [],
         }
+        # Clean up screenshot directory
+        for file in Path("violation_screenshots").glob("*.jpg"):
+            file.unlink()
     
     # Main content area
     col1, col2 = st.columns([2, 1])
