@@ -12,8 +12,10 @@ venv/
 .gitignore
 Dockerfile
 .dockerignore
-dataset
-dataset_kaggle
-output_videos
-videos
-violation_screenshots
+dataset/
+dataset_kaggle/
+output_videos/
+videos/
+violation_screenshots/
+face_db/
+images/

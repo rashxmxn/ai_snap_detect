@@ -42,7 +42,7 @@ if 'required_ppe' not in st.session_state:
     st.session_state.required_ppe = {
         'helmet': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
         'safety-vest': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
-        'safety-suit': {'violation_time': 5, 'confidence_threshold': 0.6, 'enabled': True},
+        #'safety-suit': {'violation_time': 5, 'confidence_threshold': 0.6, 'enabled': True},
         'gloves': {'violation_time': 5, 'confidence_threshold': 0.5, 'enabled': True},
         'glasses': {'violation_time': 5, 'confidence_threshold': 0.5, 'enabled': True},
     }
@@ -201,8 +201,8 @@ class StreamlitSafetyMonitor:
             conf = box.conf[0].item()
             class_name = results.names[class_id]
             
-            if class_name in st.session_state.required_ppe and not st.session_state.required_ppe[class_name]['enabled']:
-                continue
+            # if class_name in st.session_state.required_ppe and not st.session_state.required_ppe[class_name]['enabled']:
+            #     continue
                 
             color = self.COLORS.get(class_name, (255, 255, 255))
             

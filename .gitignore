@@ -11,6 +11,8 @@ context_aware_screenshots/
 output_videos/
 models/
 videos/
+face_db/
+images/
 
 # Игнорировать файлы конфигурации среды
 .env
