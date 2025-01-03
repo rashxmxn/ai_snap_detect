@@ -104,3 +104,35 @@ TRAFFIC_SIGN_CSS = """
     }
     </style>
 """
+
+# Scenario Search Settings
+SCENARIO_SEARCH_SETTINGS = {
+    'model_name': "openai/clip-vit-base-patch32",
+    'similarity_threshold': 0.25,
+    'sample_rate': 30,
+    'max_results': 3,
+    'batch_size': 32,
+    'temp_dir': 'temp_frames'
+}
+
+# Scenario Search CSS
+SCENARIO_SEARCH_CSS = """
+    <style>
+    .main {
+        padding: 2rem;
+    }
+    .search-results {
+        margin-top: 2rem;
+    }
+    .result-card {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background: #f8f9fa;
+        margin-bottom: 1rem;
+    }
+    .similarity-score {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    </style>
+"""

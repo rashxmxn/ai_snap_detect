@@ -2,6 +2,7 @@ import streamlit as st
 from projects.ppe_detection.app import PPEDetectionApp
 from projects.face_recognition.app import FaceRecognitionApp
 from projects.sign_detection.app import TrafficSignApp
+from projects.scenario_search.app import ScenarioSearchApp
 
 # Set page config - Must be the first Streamlit command
 st.set_page_config(
@@ -50,7 +51,7 @@ def setup_home_page():
         """)
         
         # Project cards using columns
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         
         with col1:
             st.markdown("""
@@ -90,6 +91,19 @@ def setup_home_page():
             if st.button("Launch Traffic Sign Detection"):
                 st.session_state.current_project = "Traffic Sign Detection"
                 st.rerun()
+        
+        with col4:
+            st.markdown("""
+            ### 👤 Smart Scenario Searcher
+            Real-time video scenario search using natural language descriptions.
+            Features:
+            - Natural language search
+            - Scene matching
+            - Video annotation
+            """)
+            if st.button("Launch Scenario Searcher"):
+                st.session_state.current_project = "Scenario Searcher"
+                st.rerun()
 
 def render_project_page():
     """Render the selected project page"""
@@ -109,7 +123,8 @@ def render_project_page():
         project_classes = {
             "PPE Detection": PPEDetectionApp,
             "Face Recognition": FaceRecognitionApp,
-            "Traffic Sign Detection": TrafficSignApp
+            "Traffic Sign Detection": TrafficSignApp,
+            "Scenario Searcher": ScenarioSearchApp
         }
         
         project_class = project_classes.get(st.session_state.current_project)
