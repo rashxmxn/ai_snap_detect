@@ -13,6 +13,7 @@ models/
 videos/
 face_db/
 images/
+facerec_test/
 
 # Игнорировать файлы конфигурации среды
 .env

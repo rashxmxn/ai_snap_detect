@@ -1,0 +1,106 @@
+from collections import defaultdict
+import torch
+from pathlib import Path
+
+### PPE Detector
+# Default PPE settings
+DEFAULT_PPE_SETTINGS = {
+    'helmet': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
+    'safety-vest': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
+    'gloves': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
+    'glasses': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
+}
+
+# Color settings for visualization
+PPE_COLORS = {
+    'person': (0, 0, 255),      # Red
+    'helmet': (255, 0, 255),    # Magenta
+    'safety-vest': (255, 165, 0),# Orange
+    'safety-suit': (0, 255, 0),  # Green
+    'gloves': (255, 255, 0),     # Yellow
+    'glasses': (0, 255, 255),    # Cyan
+}
+
+# Default violation statistics structure
+DEFAULT_VIOLATION_STATS = {
+    'total_violations': 0,
+    'violations_by_ppe': defaultdict(int),
+    'violations_screenshots': []
+}
+
+# Model settings
+DEFAULT_PPE_DETECTION_MODELS = ["models/yolo9c.pt", "models/yolo9e.pt",]
+
+# Detection settings
+DETECTION_HISTORY_WINDOW = 3
+
+# Custom CSS
+PPE_CSS = """
+    <style>
+    .main {
+        padding: 2rem;
+    }
+    .stAlert {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    .violation-counter {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ff4b4b;
+    }
+    </style>
+"""
+
+
+
+### Face Recognition
+# Face Recognition Settings
+FACE_RECOGNITION_SETTINGS = {
+    'similarity_threshold': 0.85,
+    'db_dir': 'face_db',
+    'device': torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+}
+
+# Face Recognition Custom CSS
+FACE_RECOGNITION_CSS = """
+    <style>
+    .main {
+        padding: 2rem;
+    }
+    .stAlert {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    </style>
+"""
+
+# Ensure database directory exists
+Path(FACE_RECOGNITION_SETTINGS['db_dir']).mkdir(parents=True, exist_ok=True)
+
+### Traffic Sign Detection
+
+TRAFFIC_SIGN_SETTINGS = {
+    'model_id': "traffic_sign-gv5rp-zklpc/1",
+    'confidence_threshold': 0.5,
+    'iou_threshold': 0.5,
+    'enable_annotations': True
+}
+
+# Traffic Sign Detection CSS
+TRAFFIC_SIGN_CSS = """
+    <style>
+    .main {
+        padding: 2rem;
+    }
+    .stAlert {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    .detection-stats {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    </style>
+"""

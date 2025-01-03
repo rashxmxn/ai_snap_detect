@@ -7,3 +7,6 @@ streamlit==1.40.2
 torch==2.5.1
 transformers==4.46.2
 ultralytics==8.3.32
+facenet-pytorch==2.5.3
+inference-gpu==0.32.0
+supervision==0.25.1
