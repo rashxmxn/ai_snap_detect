@@ -34,7 +34,8 @@ EXPOSE 8501
 # Set environment variables
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+ENV ROBOFLOW_API_KEY=Twdup3qP8sok8DPVIx0T
 
 # Command to run the application
-CMD ["streamlit", "run", "app.py", "--server.address", "0.0.0.0"]
+CMD ["streamlit", "run", "main_app.py", "--server.address", "0.0.0.0"]
 

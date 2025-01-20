@@ -1,12 +1,13 @@
-numpy==2.0.2
+facenet_pytorch==2.5.3
+inference_gpu==0.32.0
+numpy<=1.26.4
 opencv_python==4.10.0.84
+opencv_python_headless==4.10.0.84
 pandas==2.2.3
-Pillow==11.0.0
+Pillow>=9.0.0,<11.0.0
 plotly==5.24.1
 streamlit==1.40.2
-torch==2.5.1
+supervision==0.25.1
 transformers==4.46.2
 ultralytics==8.3.32
-facenet-pytorch==2.5.3
-inference-gpu==0.32.0
-supervision==0.25.1
+# torch and torchvision are installed separately with CUDA support
