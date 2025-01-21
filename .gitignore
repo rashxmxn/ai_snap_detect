@@ -14,6 +14,7 @@ videos/
 face_db/
 images/
 facerec_test/
+recordings/
 
 # Игнорировать файлы конфигурации среды
 .env

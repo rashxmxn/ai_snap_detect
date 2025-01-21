@@ -15,8 +15,7 @@ Dockerfile
 dataset/
 dataset_kaggle/
 output_videos/
-videos/
 violation_screenshots/
+recordings/
 face_db/
 images/
-facerec_test/

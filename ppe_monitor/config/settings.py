@@ -3,7 +3,6 @@ import torch
 from pathlib import Path
 
 ### PPE Detector
-# Default PPE settings
 DEFAULT_PPE_SETTINGS = {
     'helmet': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
     'safety-vest': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
@@ -55,7 +54,6 @@ PPE_CSS = """
 
 
 ### Face Recognition
-# Face Recognition Settings
 FACE_RECOGNITION_SETTINGS = {
     'similarity_threshold': 0.85,
     'db_dir': 'face_db',
@@ -78,8 +76,8 @@ FACE_RECOGNITION_CSS = """
 # Ensure database directory exists
 Path(FACE_RECOGNITION_SETTINGS['db_dir']).mkdir(parents=True, exist_ok=True)
 
-### Traffic Sign Detection
 
+### Traffic Sign Detection
 TRAFFIC_SIGN_SETTINGS = {
     'model_id': "traffic_sign-gv5rp-zklpc/1",
     'confidence_threshold': 0.5,
@@ -105,7 +103,7 @@ TRAFFIC_SIGN_CSS = """
     </style>
 """
 
-# Scenario Search Settings
+### Scenario Search Settings
 SCENARIO_SEARCH_SETTINGS = {
     'model_name': "openai/clip-vit-base-patch32",
     'similarity_threshold': 0.25,
@@ -133,6 +131,50 @@ SCENARIO_SEARCH_CSS = """
     .similarity-score {
         font-weight: bold;
         color: #2c3e50;
+    }
+    </style>
+"""
+
+
+
+### Voice Transcription Settings
+VOICE_TRANSCRIPTION_SETTINGS = {
+    'model_size': "base",
+    'sample_rate': 16000,
+    'channels': 1,
+    'max_duration': 300,  # 5 minutes
+    'default_duration': 30,
+    'recordings_dir': 'recordings'
+}
+
+# Voice Transcription CSS
+VOICE_TRANSCRIPTION_CSS = """
+    <style>
+    .main {
+        padding: 2rem;
+    }
+    .transcription-box {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+    }
+    .segment {
+        padding: 0.5rem;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 0.5rem;
+    }
+    .timestamp {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .recording-status {
+        color: #dc3545;
+        font-weight: bold;
+        animation: blink 1s infinite;
+    }
+    @keyframes blink {
+        50% { opacity: 0.5; }
     }
     </style>
 """

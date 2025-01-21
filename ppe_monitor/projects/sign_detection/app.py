@@ -55,30 +55,8 @@ class TrafficSignApp(BaseProject):
         if st.sidebar.button("Reset Statistics"):
             st.session_state.detector.reset_stats()
     
-    def display_output(self, col2):
-        """Display detection statistics"""
-        with col2:
-            st.subheader("Detection Statistics")
-            
-            stats = st.session_state.detector.get_stats()
-            
-            # Display total detections
-            st.metric("Total Signs Detected", stats['total_detections'])
-            
-            # Display per-class statistics
-            if stats['detections_by_class']:
-                df = pd.DataFrame([
-                    {"Class": k, "Count": v}
-                    for k, v in stats['detections_by_class'].items()
-                ])
-                
-                fig = px.bar(
-                    df,
-                    x="Class",
-                    y="Count",
-                    title="Detections by Sign Type"
-                )
-                st.plotly_chart(fig)
+    def display_output(self):
+        pass
     
     def process_input(self, source_path, video_placeholder):
         """Process video input from file or webcam"""
@@ -144,6 +122,3 @@ class TrafficSignApp(BaseProject):
             # Clean up temporary file if used
             if source == "Video File" and 'source_path' in locals():
                 os.unlink(source_path)
-        
-        # Display statistics
-        self.display_output(col2)

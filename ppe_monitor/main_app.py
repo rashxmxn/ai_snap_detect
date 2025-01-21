@@ -3,10 +3,11 @@ from projects.ppe_detection.app import PPEDetectionApp
 from projects.face_recognition.app import FaceRecognitionApp
 from projects.sign_detection.app import TrafficSignApp
 from projects.scenario_search.app import ScenarioSearchApp
+from projects.voice_transcription.app import VoiceTranscriptionApp
 
 # Set page config - Must be the first Streamlit command
 st.set_page_config(
-    page_title="CV Projects Hub",
+    page_title="AI Projects Hub",
     page_icon="🔍",
     layout="wide"
 )
@@ -43,21 +44,20 @@ def setup_home_page():
             </style>
         """, unsafe_allow_html=True)
         
-        st.title("Computer Vision Projects Hub")
+        st.title("AI Projects Hub")
         st.markdown("""
-        ### Welcome to the CV Projects Hub! 👋
+        ### Welcome to the AI Projects Hub! 👋
         
-        This application showcases various computer vision projects. Select a project below to get started.
+        This application showcases various AI projects. Select a project below to get started.
         """)
         
-        # Project cards using columns
-        col1, col2, col3, col4 = st.columns(4)
+        # First row of projects (3 columns)
+        row1_col1, row1_col2, row1_col3 = st.columns(3)
         
-        with col1:
+        with row1_col1:
             st.markdown("""
             ### 🎥 Smart Safety Monitor
             Real-time PPE (Personal Protective Equipment) detection system for workplace safety.
-            Features:
             - Real-time PPE detection
             - Violation tracking
             - Automated alerts
@@ -66,11 +66,10 @@ def setup_home_page():
                 st.session_state.current_project = "PPE Detection"
                 st.rerun()
 
-        with col2:
+        with row1_col2:
             st.markdown("""
             ### 👤 Face Recognition System
             Real-time face recognition system with user management.
-            Features:
             - Real-time face detection
             - User registration
             - Identity verification
@@ -79,11 +78,10 @@ def setup_home_page():
                 st.session_state.current_project = "Face Recognition"
                 st.rerun()
         
-        with col3:
+        with row1_col3:
             st.markdown("""
             ### 🚦 Traffic Sign Detection
             Real-time traffic sign detection and classification system.
-            Features:
             - Sign detection & classification
             - Detection statistics
             - Support for video files and webcam
@@ -92,11 +90,14 @@ def setup_home_page():
                 st.session_state.current_project = "Traffic Sign Detection"
                 st.rerun()
         
-        with col4:
+        # Second row of projects (2 columns with spacing)
+        # Using 3 columns but leaving the last one empty for balance
+        row2_col1, row2_col2, row2_col3 = st.columns(3)
+        
+        with row2_col1:
             st.markdown("""
             ### 👤 Smart Scenario Searcher
             Real-time video scenario search using natural language descriptions.
-            Features:
             - Natural language search
             - Scene matching
             - Video annotation
@@ -104,6 +105,20 @@ def setup_home_page():
             if st.button("Launch Scenario Searcher"):
                 st.session_state.current_project = "Scenario Searcher"
                 st.rerun()
+                
+        with row2_col2:
+            st.markdown("""
+            ### 🎤 Voice Transcription
+            Real-time voice transcription system with speaker diarization.
+            - Real-time transcription
+            - Speaker diarization
+            - Text summarization
+            """)
+            if st.button("Launch Voice Transcription"):
+                st.session_state.current_project = "Voice Transcription"
+                st.rerun()
+
+        # row2_col3 is left empty for balanced layout
 
 def render_project_page():
     """Render the selected project page"""
@@ -124,7 +139,8 @@ def render_project_page():
             "PPE Detection": PPEDetectionApp,
             "Face Recognition": FaceRecognitionApp,
             "Traffic Sign Detection": TrafficSignApp,
-            "Scenario Searcher": ScenarioSearchApp
+            "Scenario Searcher": ScenarioSearchApp,
+            "Voice Transcription": VoiceTranscriptionApp
         }
         
         project_class = project_classes.get(st.session_state.current_project)
