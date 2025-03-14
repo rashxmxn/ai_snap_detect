@@ -80,7 +80,7 @@ class PPEDetectionApp(BaseProject):
                 if not ret:
                     break
                 # Process frame
-                processed_frame = self.detector.process_frame(frame)
+                processed_frame = self.detector.process_frame(frame, )
                 # Convert BGR to RGB for display
                 rgb_frame = cv2.cvtColor(processed_frame, cv2.COLOR_BGR2RGB)
                 # Display the frame

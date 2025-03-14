@@ -1,6 +1,8 @@
 # Игнорировать все файлы .log
 *.log
 *.pt
+*.pyc
+*.wav
 
 # Игнорировать директорию node_modules
 dataset/
@@ -15,6 +17,6 @@ face_db/
 images/
 facerec_test/
 recordings/
-
+__pycache__/
 # Игнорировать файлы конфигурации среды
 .env

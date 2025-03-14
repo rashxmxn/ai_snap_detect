@@ -40,3 +40,32 @@ ENV ROBOFLOW_API_KEY=Twdup3qP8sok8DPVIx0T
 # Command to run the application
 CMD ["streamlit", "run", "main_app.py", "--server.address", "0.0.0.0"]
 
+# Use NVIDIA CUDA base image with Python
+# FROM nvidia/cuda:12.3.1-runtime-ubuntu22.04
+
+# # Set working directory
+# WORKDIR /app
+
+# # Install Python and pip
+# RUN apt-get update && apt-get install -y \
+#     python3.11 \
+#     python3-pip \
+#     && rm -rf /var/lib/apt/lists/*
+
+# # Copy requirements file
+# COPY requirements.txt .
+
+# # Install dependencies
+# RUN pip3 install --no-cache-dir -r requirements.txt
+
+# # Set Python path
+# ENV PYTHONPATH=/app
+
+# # Copy application code
+# COPY . .
+
+# # Command to run the application
+# CMD ["python3", "app.py"]
+
+# # Runtime command for using NVIDIA Container Toolkit
+# LABEL com.nvidia.volumes.needed="nvidia_driver"

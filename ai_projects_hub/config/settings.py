@@ -1,8 +1,15 @@
 from collections import defaultdict
 import torch
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
-### PPE Detector
+load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent / '.env')
+
+ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
+print(ROBOFLOW_API_KEY)
+
+### PPE Detector ###
 DEFAULT_PPE_SETTINGS = {
     'helmet': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
     'safety-vest': {'violation_time': 3, 'confidence_threshold': 0.6, 'enabled': True},
@@ -13,7 +20,7 @@ DEFAULT_PPE_SETTINGS = {
 # Color settings for visualization
 PPE_COLORS = {
     'person': (0, 0, 255),      # Red
-    'helmet': (255, 0, 255),    # Magenta
+    'helmet': (255, 0, 55),    # Magenta
     'safety-vest': (255, 165, 0),# Orange
     'safety-suit': (0, 255, 0),  # Green
     'gloves': (255, 255, 0),     # Yellow
@@ -53,7 +60,7 @@ PPE_CSS = """
 
 
 
-### Face Recognition
+### Face Recognition ###
 FACE_RECOGNITION_SETTINGS = {
     'similarity_threshold': 0.85,
     'db_dir': 'face_db',
@@ -77,7 +84,7 @@ FACE_RECOGNITION_CSS = """
 Path(FACE_RECOGNITION_SETTINGS['db_dir']).mkdir(parents=True, exist_ok=True)
 
 
-### Traffic Sign Detection
+### Traffic Sign Detection ###
 TRAFFIC_SIGN_SETTINGS = {
     'model_id': "traffic_sign-gv5rp-zklpc/1",
     'confidence_threshold': 0.5,
@@ -103,7 +110,7 @@ TRAFFIC_SIGN_CSS = """
     </style>
 """
 
-### Scenario Search Settings
+### Scenario Search Settings ###
 SCENARIO_SEARCH_SETTINGS = {
     'model_name': "openai/clip-vit-base-patch32",
     'similarity_threshold': 0.25,
@@ -137,7 +144,7 @@ SCENARIO_SEARCH_CSS = """
 
 
 
-### Voice Transcription Settings
+### Voice Transcription Settings ###
 VOICE_TRANSCRIPTION_SETTINGS = {
     'model_size': "base",
     'sample_rate': 16000,
