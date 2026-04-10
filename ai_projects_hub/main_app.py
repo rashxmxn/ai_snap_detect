@@ -8,7 +8,7 @@ from projects.voice_transcription.app import VoiceTranscriptionApp
 # Set page config - Must be the first Streamlit command
 st.set_page_config(
     page_title="AI Projects Hub",
-    page_icon="🔍",
+    page_icon="search",
     layout="wide"
 )
 
@@ -46,7 +46,7 @@ def setup_home_page():
         
         st.title("AI Projects Hub")
         st.markdown("""
-        ### Welcome to the AI Projects Hub! 👋
+        ### Welcome to the AI Projects Hub!
         
         This application showcases various AI projects. Select a project below to get started.
         """)
@@ -56,7 +56,7 @@ def setup_home_page():
         
         with row1_col1:
             st.markdown("""
-            ### 🎥 Smart Safety Monitor
+            ### Smart Safety Monitor
             Real-time PPE (Personal Protective Equipment) detection system for workplace safety.
             - Real-time PPE detection
             - Violation tracking
@@ -68,7 +68,7 @@ def setup_home_page():
 
         with row1_col2:
             st.markdown("""
-            ### 👤 Face Recognition System
+            ### Face Recognition System
             Real-time face recognition system with user management.
             - Real-time face detection
             - User registration
@@ -80,7 +80,7 @@ def setup_home_page():
         
         with row1_col3:
             st.markdown("""
-            ### 🚦 Traffic Sign Detection
+            ### Traffic Sign Detection
             Real-time traffic sign detection and classification system.
             - Sign detection & classification
             - Detection statistics
@@ -96,7 +96,7 @@ def setup_home_page():
         
         with row2_col1:
             st.markdown("""
-            ### 👤 Smart Scenario Searcher
+            ### Smart Scenario Searcher
             Real-time video scenario search using natural language descriptions.
             - Natural language search
             - Scene matching
@@ -108,7 +108,7 @@ def setup_home_page():
                 
         with row2_col2:
             st.markdown("""
-            ### 🎤 Voice Transcription
+            ### Voice Transcription
             Real-time voice transcription system with speaker diarization.
             - Real-time transcription
             - Speaker diarization
@@ -130,7 +130,7 @@ def render_project_page():
     
     with project_container:
         # Add a return to home button in the sidebar
-        if st.sidebar.button("← Return to Home"):
+        if st.sidebar.button("< Return to Home"):
             st.session_state.current_project = None
             st.rerun()
         
