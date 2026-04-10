@@ -11,12 +11,8 @@ venv/
 violation_screenshots/
 context_aware_screenshots/
 output_videos/
-models/
 videos/
 face_db/
-images/
-facerec_test/
-recordings/
 __pycache__/
 # Игнорировать файлы конфигурации среды
 .env
